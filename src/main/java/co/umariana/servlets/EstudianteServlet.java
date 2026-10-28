@@ -74,6 +74,7 @@ public class EstudianteServlet extends HttpServlet {
         } catch (NumberFormatException | NullPointerException e) {
             return "El semestre debe ser un número entre 1 y 10";
         }
+
         return null;
     }
 
@@ -89,6 +90,11 @@ public class EstudianteServlet extends HttpServlet {
         // YA RESUELTO: "nuevo" muestra el formulario vacío.
         if ("nuevo".equals(accion)) {
             request.getRequestDispatcher(VISTA_FORMULARIO).forward(request, response);
+            return;
+        }
+        if ("listar".equals(accion) || accion == null) {
+            request.setAttribute("estudiantes", dao.listar());
+            request.getRequestDispatcher(VISTA_LISTAR).forward(request, response);
             return;
         }
 
